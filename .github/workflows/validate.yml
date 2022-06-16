@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
-    branches: [ "master" ]
+    branches: [ master, dev ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ master, dev ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,13 +24,15 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+  validate:
+    runs-on: ubuntu-latest
+    
+  # You may pin to the exact commit or the version.
+  # uses: Cyb3r-Jak3/html5validator-action@9b2d5145278274ecc8b7577f18f7d0f4482d2624
+    steps:
+      - uses: actions/checkout@v3
+      - name: HTML5 Validator
+        uses: Cyb3r-Jak3/html5validator-action@v7.1.1
+        with:
+        # Path of the files to test
+          root: .
